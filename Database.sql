@@ -169,9 +169,9 @@ SELECT  DISTINCT e.first_name AS NAME,es.salary AS Salary FROM employee AS e,emp
 WHERE e.id = es.fk_employee_id;
 
 -- select single query to get all employee name, all hobby_name in single column 
-SELECT  first_name AS NAME FROM employee 
+SELECT  e.first_name AS NAME FROM employee AS e
 UNION ALL
-SELECT NAME AS Hobby FROM hobby;
+SELECT h.NAME AS Hobby FROM hobby AS h;
 
 
  -- Get employee name, total salary of employee, hobby name(comma-separated - you need to use subquery for hobby name)

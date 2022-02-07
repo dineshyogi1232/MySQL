@@ -165,21 +165,21 @@ SELECT * FROM employee_salary;
 
 
 -- Create a select query to get  employee name, his/her employee_salary 
-SELECT  DISTINCT e.first_name AS NAME,es.salary AS Salary FROM employee AS e,employee_salary AS es
+SELECT  DISTINCT e.first_name AS NAME,es.salary AS salary FROM employee AS e,employee_salary AS es
 WHERE e.id = es.fk_employee_id;
 
 -- select single query to get all employee name, all hobby_name in single column 
 SELECT  e.first_name AS NAME FROM employee AS e
 UNION ALL
-SELECT h.NAME AS Hobby FROM hobby AS h;
+SELECT h.NAME AS hobby FROM hobby AS h;
 
 
  -- Get employee name, total salary of employee, hobby name(comma-separated - you need to use subquery for hobby name)
-SELECT eout.id,CONCAT( eout.first_name,' ',eout.last_name ) AS Emp_Name,
-SUM(es.salary) AS Salary, 
-(SELECT GROUP_CONCAT( NAME SEPARATOR ', ' ) FROM employee_hobby eh 
-LEFT JOIN hobby h ON h.id = eh.fk_hobby_id WHERE eout.id = eh.fk_employee_id ) AS Hobby 
+SELECT CONCAT(eout.first_name,' ',eout.last_name ) AS emp_Name,
+SUM(es.salary) AS salary, 
+(SELECT GROUP_CONCAT( NAME SEPARATOR ' , ' ) FROM employee_hobby eh 
+LEFT JOIN hobby h ON h.id = eh.fk_hobby_id WHERE eout.id = eh.fk_employee_id ) AS hobby 
 FROM employee eout
 LEFT JOIN employee_salary es ON eout.id = es.fk_employee_id   
-GROUP BY id;
+GROUP BY eout.id;
 

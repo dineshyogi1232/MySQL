@@ -524,18 +524,18 @@ FROM
   employee_salary;
 -- Create a select query to get  employee name, his/her employee_salary 
 SELECT 
-  DISTINCT e.first_name AS NAME, 
+  DISTINCT emp.first_name AS NAME, 
   es.salary AS salary 
 FROM 
-  employee AS e, 
+  employee AS emp, 
   employee_salary AS es 
 WHERE 
-  e.id = es.fk_employee_id;
+  emp.id = es.fk_employee_id;
 -- select single query to get all employee name, all hobby_name in single column 
 SELECT 
-  e.first_name AS NAME 
+  emp.first_name AS NAME 
 FROM 
-  employee AS e 
+  employee AS emp 
 UNION ALL 
 SELECT 
   h.NAME AS hobby 

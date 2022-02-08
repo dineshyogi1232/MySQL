@@ -300,7 +300,8 @@ WHERE
 
 -- select single query to get all employee name, all hobby_name in single column 
 SELECT 
-  first_name AS NAME 
+  CONCAT(
+    first_name, ' ',last_name) AS NAME 
 FROM 
   employee 
 UNION ALL 

@@ -300,14 +300,14 @@ WHERE
 
 -- select single query to get all employee name, all hobby_name in single column 
 SELECT 
-  emp.first_name AS NAME 
+  first_name AS NAME 
 FROM 
-  employee AS emp 
+  employee 
 UNION ALL 
 SELECT 
-  h.NAME AS hobby 
+  NAME AS hobby 
 FROM 
-  hobby AS h;
+  hobby;
 
 -- Get employee name, total salary of employee, hobby name(comma-separated - you need to use subquery for hobby name)
 SELECT 
@@ -317,7 +317,7 @@ SELECT
   SUM(es.salary) AS salary, 
   (
     SELECT 
-      GROUP_CONCAT(NAME SEPARATOR ', ') 
+      GROUP_CONCAT(h.NAME SEPARATOR ', ') 
     FROM 
       employee_hobby eh 
       LEFT JOIN hobby h ON h.id = eh.fk_hobby_id 

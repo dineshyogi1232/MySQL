@@ -224,21 +224,21 @@ SET
   salary = 10000, 
   salary_date = '2008-12-11' 
 WHERE 
-  id = 2;
+  fk_employee_id = 2  AND id = 2;
 
 UPDATE 
   employee_hobby 
 SET 
-  id =(
+  fk_hobby_id =(
     SELECT 
       id 
     FROM 
       hobby 
     WHERE 
-      NAME = 'Coding'
+      NAME = 'Singing'
   ) 
 WHERE 
-  id = 1;
+  fk_employee_id = 1 AND id = 1;
 
 -- 4.Delete Data Queries
 DELETE FROM 

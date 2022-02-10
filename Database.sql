@@ -301,7 +301,7 @@ FROM
 
 -- 8.Create a select query to get employee name, his/her employee_salary 
 SELECT 
-  DISTINCT emp.id AS employeeid, 
+  emp.id AS employeeid, 
   CONCAT(
     emp.first_name, ' ', emp.last_name
   ) AS employee_name, 
@@ -310,7 +310,10 @@ FROM
   employee AS emp, 
   employee_salary AS es 
 WHERE 
-  emp.id = es.fk_employee_id;
+  emp.id = es.fk_employee_id 
+GROUP BY 
+  emp.id;
+
 
 -- 9.Get employee name, total salary of employee, hobby name(comma-separated - you need to use subquery for hobby name)
 SELECT 

@@ -1,8 +1,8 @@
--- Create Database  Queries 
+-- 1.Create Database  Queries 
 CREATE DATABASE employee;
 USE employee;
 
--- Create Table Queries
+-- 1.Create Table Queries
 CREATE TABLE hobby(
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
   NAME VARCHAR(250)
@@ -33,7 +33,7 @@ CREATE TABLE employee_hobby(
   FOREIGN KEY (fk_hobby_id) REFERENCES hobby(id)
 );
 
--- Insert Data in hobby Queries
+-- 2.Insert Data in hobby Queries
 INSERT INTO hobby (NAME) 
 VALUES 
   ('Bike Riding');
@@ -54,7 +54,7 @@ INSERT INTO hobby (NAME)
 VALUES 
   ('Travelling');
 
--- Insert Data in employee table Queries
+-- 2.Insert Data in employee table Queries
 INSERT INTO employee (
   first_name, last_name, age, mobile_number, 
   address
@@ -101,7 +101,7 @@ VALUES
     'David', 'Gutta', 18, 999995399, 'Vasna'
   );
 
--- Insert Data in employee_salary table Queries
+-- 2.Insert Data in employee_salary table Queries
 INSERT INTO employee_salary (
   salary, salary_date, fk_employee_id
 ) 
@@ -162,7 +162,7 @@ INSERT INTO employee_salary (
 VALUES 
   (10000, '2008-11-11', 4);
 
--- Insert Data in employee_hobby table Queries
+-- 2.Insert Data in employee_hobby table Queries
 INSERT INTO employee_hobby (fk_employee_id, fk_hobby_id) 
 VALUES 
   (1, 105);
@@ -203,7 +203,7 @@ INSERT INTO employee_hobby (fk_employee_id, fk_hobby_id)
 VALUES 
   (1, 102);
 
--- Update Data Queries
+-- 3.Update Data Queries
 UPDATE 
   hobby 
 SET 
@@ -216,12 +216,12 @@ UPDATE
 SET 
   last_name = 'Addy' 
 WHERE 
-  address = 'Bapunagar';
+  address = 'Naroda';
 
 UPDATE 
   employee_salary 
 SET 
-  salary = 15000, 
+  salary = 10000, 
   salary_date = '2008-12-11' 
 WHERE 
   id = 2;
@@ -240,7 +240,7 @@ SET
 WHERE 
   id = 1;
 
--- Delete Data Queries
+-- 4.Delete Data Queries
 DELETE FROM 
   employee 
 LIMIT 
@@ -261,13 +261,13 @@ DELETE FROM
 LIMIT 
   2;
 
--- Truncate Table Queries
+-- 5.Truncate Table Queries
 TRUNCATE TABLE hobby;
 TRUNCATE TABLE employee_salary;
 TRUNCATE TABLE employee_hobby;
 TRUNCATE TABLE employee;
 
--- Select All Data Queries
+-- 6.Create a separate select queries to get a hobby, employee, employee_salary, employee_hobby.
 SELECT 
   * 
 FROM 
@@ -288,20 +288,9 @@ SELECT
 FROM 
   employee_salary;
 
--- Create a select query to get  employee name, his/her employee_salary 
+-- 7.select single query to get all employee name, all hobby_name in single column 
 SELECT 
-  DISTINCT emp.first_name AS NAME, 
-  es.salary AS salary 
-FROM 
-  employee AS emp, 
-  employee_salary AS es 
-WHERE 
-  emp.id = es.fk_employee_id;
-
--- select single query to get all employee name, all hobby_name in single column 
-SELECT 
-  CONCAT(
-    first_name, ' ',last_name) AS NAME 
+  CONCAT(first_name, ' ', last_name) AS employee_name 
 FROM 
   employee 
 UNION ALL 
@@ -310,15 +299,29 @@ SELECT
 FROM 
   hobby;
 
--- Get employee name, total salary of employee, hobby name(comma-separated - you need to use subquery for hobby name)
+-- 8.Create a select query to get employee name, his/her employee_salary 
 SELECT 
+  DISTINCT emp.id AS employeeid, 
   CONCAT(
     emp.first_name, ' ', emp.last_name
-  ) AS emp_Name, 
+  ) AS employee_name, 
+  es.salary AS salary 
+FROM 
+  employee AS emp, 
+  employee_salary AS es 
+WHERE 
+  emp.id = es.fk_employee_id;
+
+-- 9.Get employee name, total salary of employee, hobby name(comma-separated - you need to use subquery for hobby name)
+SELECT 
+  emp.id AS employeeid, 
+  CONCAT(
+    emp.first_name, ' ', emp.last_name
+  ) AS employee_name, 
   SUM(es.salary) AS salary, 
   (
     SELECT 
-      GROUP_CONCAT(h.NAME SEPARATOR ', ') 
+      GROUP_CONCAT(h.name SEPARATOR ', ') 
     FROM 
       employee_hobby eh 
       LEFT JOIN hobby h ON h.id = eh.fk_hobby_id 
